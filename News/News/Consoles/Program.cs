@@ -36,15 +36,14 @@ namespace News.Consoles
             NewsService service = new NewsService();
             service.NewsAvailable += ReportNewsDataAvailable;
 
-            Task<Models.News>[] t = new Task<Models.News>[Enum.GetNames(typeof(NewsCategory)).Length];
+            List<Task<Models.News>> t = new List<Task<Models.News>>();
 
             for (int i = (int)NewsCategory.business; i < (int)NewsCategory.technology + 1; i++)
             {
                 try
                 {
                     await service.GetNewsAsync((NewsCategory)i);
-                    t[i] = service.GetNewsAsync((NewsCategory)i);
-
+                    t.Add(service.GetNewsAsync((NewsCategory)i));
                 }
                 catch (Exception ex)
                 {
@@ -52,7 +51,7 @@ namespace News.Consoles
                 }
             }
 
-            Task.WaitAll(t);
+            Task.WaitAll(t.ToArray());
 
             theConsoleString.AppendLine("--------------------");
 

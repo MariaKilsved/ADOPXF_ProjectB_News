@@ -47,6 +47,8 @@ namespace News.Consoles
                 }
                 catch (Exception ex)
                 {
+                    theConsoleString.AppendLine("Exception!");
+                    theConsoleString.AppendLine(ex.ToString());
                     exception = ex;
                 }
             }
@@ -55,10 +57,9 @@ namespace News.Consoles
 
             theConsoleString.AppendLine("--------------------");
 
-
             foreach (var item in t)
             {
-                if (item?.Status == TaskStatus.RanToCompletion)
+                if (item.Status == TaskStatus.RanToCompletion)
                 {
                     Models.News news = item.Result;
                     theConsoleString.AppendLine($"News in Category {item.Result.Category}");

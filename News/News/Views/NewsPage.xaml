@@ -1,9 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="News.Views.NewsPage">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="News.Views.NewsPage"
+    Title="News"
+    Padding="10, 0">
     <ContentPage.Content>
         <StackLayout>
+            <Button
+                Clicked="Button_Clicked"
+                Text="Refresh"></Button>
+            <StackLayout
+                x:Name="errorMsg"
+                IsVisible="false">
+                <Label
+                    Text="Error" />
+                <Label
+                    x:Name="errorMsgEx"
+                    Text="" />
+            </StackLayout>
+            <ActivityIndicator
+                x:Name="loading"
+                IsRunning="False"></ActivityIndicator>
+            <ListView x:Name="articlesListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="40">
+                            <StackLayout
+                                HorizontalOptions="StartAndExpand"
+                                Orientation="Horizontal"
+                                Padding="25,10,55,15">
+                                <StackLayout
+                                    HorizontalOptions="Start"
+                                    Orientation="Vertical"
+                                    Padding="3">
+                                    <Image
+                                        Source="{Binding UrlToImage}"
+                                        HorizontalOptions="FillAndExpand" />
+                                </StackLayout>
+                                <StackLayout
+                                    HorizontalOptions="End"
+                                    Orientation="Vertical"
+                                    Padding="5">
+                                    <Label
+                                        HorizontalOptions="Start"
+                                        FontSize="20"
+                                        FontFamily="PlayfairDisplay"
+                                        Text="{Binding Title}"></Label>
+                                    <Label
+                                        HorizontalOptions="Start"
+                                        FontSize="16"
+                                        Text="{Binding Description}"></Label>
+                                    <Label
+                                        HorizontalOptions="Start"
+                                        FontSize="16"
+                                        Opacity="0.8"
+                                        Text="{Binding DateTime, StringFormat='{0:HH\\:mm}'}"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

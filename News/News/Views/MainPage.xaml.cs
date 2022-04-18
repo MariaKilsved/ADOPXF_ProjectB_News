@@ -18,7 +18,6 @@ namespace News.Views
         public MainPage()
         {
             InitializeComponent();
-
         }
     }
 }

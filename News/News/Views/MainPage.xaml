@@ -5,7 +5,12 @@
              x:Class="News.Views.MainPage">
   <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
-        <views:NewsPage />
+        <views:NewsPage Title="Business" />
+        <views:NewsPage Title="Entertainment" />
+        <views:NewsPage Title="General" />
+        <views:NewsPage Title="Science" />
+        <views:NewsPage Title="Sports" />
+        <views:NewsPage Title="Technology" />
         <views:AboutPage />
         <views:ConsolePage />
     </TabbedPage.Children>

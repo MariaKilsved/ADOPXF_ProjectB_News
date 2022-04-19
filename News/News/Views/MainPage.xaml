@@ -2,10 +2,10 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:News.Views" 
-             x:Class="News.Views.MainPage">
+             x:Class="News.Views.MainPage"
+             Padding="0">
   <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
-        <views:AboutPage />
         <views:NewsPage Title="Business" />
         <views:NewsPage Title="Entertainment" />
         <views:NewsPage Title="General" />
@@ -13,6 +13,7 @@
         <views:NewsPage Title="Science" />
         <views:NewsPage Title="Sports" />
         <views:NewsPage Title="Technology" />
+        <views:AboutPage />
         <views:ConsolePage />
     </TabbedPage.Children>
 </TabbedPage>

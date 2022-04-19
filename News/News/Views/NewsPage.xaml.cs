@@ -24,7 +24,6 @@ namespace News.Views
 
             service = new NewsService();
         }
-
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -73,6 +72,12 @@ namespace News.Views
         private async void Button_Clicked(object sender, EventArgs e)
         {
             await LoadNews();
+        }
+
+        private async void articlesListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            NewsItem newsItem = (NewsItem)e.Item;
+            await Navigation.PushAsync(new ArticleView(newsItem.Url));
         }
     }
 }

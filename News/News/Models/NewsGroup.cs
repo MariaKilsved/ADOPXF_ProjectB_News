@@ -9,71 +9,59 @@ namespace News.Models
     {
         business, entertainment, general, health, science, sports, technology
     }
-
     public class NewsCacheKey
     {
         NewsCategory category;
         string timewindow;
 
         public string FileName => fname("Cache-" + Key + ".xml");
-        public string Key => category.ToString() + timewindow;
+        public string Key => timewindow + category.ToString();
         public bool CacheExist => File.Exists(FileName);
 
-        public NewsCacheKey(NewsCategory category, DateTime dt)
+        public NewsCacheKey (NewsCategory category, DateTime dt)
         {
             this.category = category;
-            timewindow = DateTime.Now.ToString("yyyy-MM-dd-HH-mm");
+            //timewindow = DateTime.Now.ToString("yyyy-MM-dd-HH-mm"); //Cache expiration every minute
+            timewindow = DateTime.Now.ToString("yyyy-MM-dd-HH"); //Cache expiration every hour
         }
         static string fname(string name)
         {
             var documentPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            documentPath = Path.Combine(documentPath, "AOOP2", "Examples", "CodeExercise cache");
+            documentPath = Path.Combine(documentPath, "AOOP2", "Project Part B");
             if (!Directory.Exists(documentPath)) Directory.CreateDirectory(documentPath);
             return Path.Combine(documentPath, name);
         }
-    }
+      }
 
     [XmlRoot("News", Namespace = "http://mynamespace/test/")]
-    public class News
+    public class NewsGroup
     {
         public NewsCategory Category { get; set; }
         public List<NewsItem> Articles { get; set; }
 
-        public static void Serialize(News news, string fname)
+        public static void Serialize(NewsGroup news, string fname)
         {
             var _locker = new object();
             lock (_locker)
-            {
-                var xs = new XmlSerializer(typeof(News));
+            { 
+                var xs = new XmlSerializer(typeof(NewsGroup));
                 using (Stream s = File.Create(fname))
                     xs.Serialize(s, news);
             }
         }
-        public static News Deserialize(string fname)
+        public static NewsGroup Deserialize(string fname)
         {
             var _locker = new object();
             lock (_locker)
             {
-                News news;
-                var xs = new XmlSerializer(typeof(News));
+                NewsGroup news;
+                var xs = new XmlSerializer(typeof(NewsGroup));
 
                 using (Stream s = File.OpenRead(fname))
-                    news = (News)xs.Deserialize(s);
+                    news = (NewsGroup)xs.Deserialize(s);
 
                 return news;
             }
-        }
-
-        static string fnameGenerator(string name)
-        {
-            var docPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            docPath = Path.Combine(docPath, name);
-            if (!Directory.Exists(docPath))
-            {
-                Directory.CreateDirectory(docPath);
-            }
-            return Path.Combine(docPath, name);
-
         }
     }
 }

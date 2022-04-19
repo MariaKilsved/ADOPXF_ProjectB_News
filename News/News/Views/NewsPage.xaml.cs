@@ -61,7 +61,7 @@ namespace News.Views
                 exception = ex;
             }
 
-            Task.WaitAll(t1);
+            t1.Wait();
 
             if (t1?.Status == TaskStatus.RanToCompletion)
             {
@@ -73,6 +73,7 @@ namespace News.Views
                 loading.IsRunning = false;
                 errorMsg.IsVisible = true;
                 errorMsgEx.Text = exception?.Message;
+                await DisplayErrorAlert(exception);
             }
         }
 
@@ -85,6 +86,16 @@ namespace News.Views
         {
             NewsItem newsItem = (NewsItem)e.Item;
             await Navigation.PushAsync(new ArticleView(newsItem.Url));
+        }
+
+        private async Task DisplayErrorAlert(Exception ex)
+        {
+            bool answer = await DisplayAlert("Error", $"{ex.Message}", "Retry", "Cancel");
+
+            if(answer)
+            {
+                await LoadNews();
+            }
         }
     }
 }

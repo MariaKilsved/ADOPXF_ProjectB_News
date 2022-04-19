@@ -48,11 +48,14 @@ namespace News.Views
                 errorMsg.IsVisible = false;
                 errorMsgEx.Text = "";
                 await service.GetNewsAsync((NewsCategory)Enum.Parse(typeof(NewsCategory), Title.ToLower()));
+                t1 = service.GetNewsAsync((NewsCategory)Enum.Parse(typeof(NewsCategory), Title.ToLower()));
             }
             catch (Exception ex)
             {
                 exception = ex;
             }
+
+            Task.WaitAll(t1);
 
             if (t1?.Status == TaskStatus.RanToCompletion)
             {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define SimulateBadConnection
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +33,8 @@ namespace News.Views
             //Code here will run right before the screen appears
             //You want to set the Title or set the City
 
+            TitleLabel.Text = Title;
+
             //This is making the first load of data
             MainThread.BeginInvokeOnMainThread(async () => { await LoadNews(); });
         }
@@ -43,11 +47,14 @@ namespace News.Views
 
             try
             {
-                loading.IsVisible = true;
+                loading.IsRunning = true;
                 errorMsg.IsVisible = false;
                 errorMsgEx.Text = "";
                 await service.GetNewsAsync((NewsCategory)Enum.Parse(typeof(NewsCategory), Title.ToLower()));
                 t1 = service.GetNewsAsync((NewsCategory)Enum.Parse(typeof(NewsCategory), Title.ToLower()));
+#if SimulateBadConnection
+                await Task.Delay(5000);
+#endif
             }
             catch (Exception ex)
             {
@@ -59,11 +66,11 @@ namespace News.Views
             if (t1?.Status == TaskStatus.RanToCompletion)
             {
                 articlesListView.ItemsSource = t1.Result.Articles;
-                loading.IsVisible = false;
+                loading.IsRunning = false;
             }
             else
             {
-                loading.IsVisible = false;
+                loading.IsRunning = false;
                 errorMsg.IsVisible = true;
                 errorMsgEx.Text = exception?.Message;
             }

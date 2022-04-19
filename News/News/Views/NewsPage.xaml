@@ -16,6 +16,13 @@
                 <Button
                     Clicked="Button_Clicked"
                     Text="Refresh"></Button>
+                <StackLayout HorizontalOptions="Center" Padding="10">
+                    <Label
+                        x:Name="TitleLabel"
+                        FontFamily="PlayfairDisplay"
+                        HorizontalTextAlignment="Center"
+                        FontSize="24" />
+                </StackLayout>
                 <StackLayout
                     x:Name="errorMsg"
                     IsVisible="false">
@@ -75,7 +82,7 @@
                 <ActivityIndicator
                     x:Name="loading"
                     IsRunning="False"
-                    Color="#2196F3"
+                    Color="Black"
                     VerticalOptions="Center"
                     WidthRequest="20"
                     HeightRequest="20"></ActivityIndicator>

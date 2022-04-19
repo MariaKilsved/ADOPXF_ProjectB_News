@@ -39,9 +39,8 @@ namespace News.Views
         private async Task LoadNews()
         {
             Exception exception = null;
-            Task<Models.News> t1 = null;
-
-            List<Task<Models.News>> t = new List<Task<Models.News>>();
+            NewsService service = new NewsService();
+            Task<NewsGroup> t1 = null;
 
             try
             {
@@ -64,7 +63,7 @@ namespace News.Views
             {
                 loading.IsVisible = false;
                 errorMsg.IsVisible = true;
-                errorMsgEx.Text = exception.Message;
+                errorMsgEx.Text = exception?.Message;
             }
         }
 

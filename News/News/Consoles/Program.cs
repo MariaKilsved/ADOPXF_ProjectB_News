@@ -36,7 +36,7 @@ namespace News.Consoles
             NewsService service = new NewsService();
             service.NewsAvailable += ReportNewsDataAvailable;
 
-            Task<Models.News>[] t = new Task<Models.News>[Enum.GetNames(typeof(NewsCategory)).Length];
+            Task<NewsGroup>[] t = new Task<NewsGroup>[Enum.GetNames(typeof(NewsCategory)).Length];
 
             for (int i = (int)NewsCategory.business; i < (int)NewsCategory.technology + 1; i++)
             {
@@ -59,7 +59,7 @@ namespace News.Consoles
             {
                 if (item.Status == TaskStatus.RanToCompletion)
                 {
-                    Models.News news = item.Result;
+                    NewsGroup news = item.Result;
                     theConsoleString.AppendLine($"News in Category {item.Result.Category}");
                     foreach (var article in item.Result.Articles)
                     {
@@ -69,7 +69,6 @@ namespace News.Consoles
                 }
                 else
                 {
-                    theConsoleString.AppendLine($"Geolocation weather service error.");
                     theConsoleString.AppendLine($"Error: {exception.Message}");
                 }
             }
